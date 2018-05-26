@@ -18,12 +18,9 @@ public class PedidoResources {
 	@Autowired
 	private PedidoService pedidoService;
 	
-	
-	
-@RequestMapping(value= "/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		
-		Pedido objeto = pedidoService.buscar(id);		
+	@RequestMapping(value= "/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
+		Pedido objeto = pedidoService.find(id);		
 		return ResponseEntity.ok().body(objeto);
 	}
 	
