@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.sistema.cursomc.dto.CategoriaDTO;
 import com.sistema.cursomc.model.Categoria;
 import com.sistema.cursomc.repositories.CategoriaRepository;
 import com.sistema.cursomc.services.exceptions.DataIntegrityException;
@@ -57,5 +58,10 @@ public class CategoriaService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPages, Direction.valueOf(direction), ordeBy);
 		return categoriaRepository.findAll(pageRequest);
 	}
+	//método transformar uma categoria DTO em objeto
+	public Categoria fromDto(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
+	}
+	
 
 }
