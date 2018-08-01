@@ -35,6 +35,12 @@ public class ClienteService {
 		updateData(newCliente, cliente); 
 		return clienteRepository.save(newCliente);
 	}
+	
+	private void updateData(Cliente newCliente, Cliente cliente) {
+		newCliente.setNome(cliente.getNome());
+		newCliente.setEmail(cliente.getEmail());
+	}
+	
 
 	public void delete(Integer id) {
 		find(id);
@@ -59,9 +65,5 @@ public class ClienteService {
 		return new Cliente(clienteDto.getId(), clienteDto.getNome(), null, clienteDto.getEmail(), null);
 	}
 	
-	private void updateData(Cliente newCliente, Cliente cliente) {
-		newCliente.setNome(cliente.getNome());
-		newCliente.setEmail(cliente.getEmail());
-	}
 	
 }
