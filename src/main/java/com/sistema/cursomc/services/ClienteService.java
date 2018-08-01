@@ -42,7 +42,7 @@ public class ClienteService {
 		clienteRepository.deleteById(id);
 		
 		} catch (DataIntegrityViolationException e){
-			throw new DataIntegrityException("Não é possível excluir categoria com produtos associados");
+			throw new DataIntegrityException("Não é possível excluir o cliente porque há pedidos associados");
 		}
 	}
 
@@ -56,7 +56,7 @@ public class ClienteService {
 	}
 	//método transformar um cliente DTO em objeto
 	public Cliente fromDto(ClienteDTO clienteDto) {
-		return new Cliente(clienteDto.getId(), clienteDto.getNome(), clienteDto.getEmail(), null, null);
+		return new Cliente(clienteDto.getId(), clienteDto.getNome(), null, clienteDto.getEmail(), null);
 	}
 	
 	private void updateData(Cliente newCliente, Cliente cliente) {
