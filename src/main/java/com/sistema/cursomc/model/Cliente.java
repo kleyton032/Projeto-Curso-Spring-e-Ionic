@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -18,38 +19,35 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistema.cursomc.model.enums.TipoCliente;
 
 @Entity
-@Table(name="cliente")
-public class Cliente implements Serializable{
+@Table(name = "cliente")
+public class Cliente implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private String cpfOuCnpj;
 	private String email;
 	private Integer tipoCliente;
-	
-	
-	@OneToMany(mappedBy="cliente")
-	private List<Endereco> enderecos = new ArrayList<>();
-	
-	@JsonIgnore
-	@OneToMany(mappedBy="cliente")
-	private List<Pedido> pedidos = new ArrayList<>();
-	
-	//atributo set que não é repetido automáticamente e representando por um conjunto de strings
-	@ElementCollection
-	@CollectionTable(name="TELEFONE")
-	private Set<String> telefones = new HashSet<>();
-	
-	
-	public Cliente() {
-		
-	}
 
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Endereco> enderecos = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+
+	// atributo set que não é repetido automáticamente e representando por um
+	// conjunto de strings
+	@ElementCollection
+	@CollectionTable(name = "TELEFONE")
+	private Set<String> telefones = new HashSet<>();
+
+	public Cliente() {
+
+	}
 
 	public Cliente(Integer id, String nome, String cpfOuCnpj, String email, TipoCliente tipoCliente) {
 		super();
@@ -57,87 +55,72 @@ public class Cliente implements Serializable{
 		this.nome = nome;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.email = email;
-		this.tipoCliente = (tipoCliente==null) ? null: tipoCliente.getCod();
+		this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
 	}
-
 
 	public Integer getId() {
 		return id;
 	}
 
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public String getNome() {
 		return nome;
 	}
 
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 
 	public String getCpfOuCnpj() {
 		return cpfOuCnpj;
 	}
 
-
 	public void setCpfOuCnpj(String cpfOuCnpj) {
 		this.cpfOuCnpj = cpfOuCnpj;
 	}
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public TipoCliente getTipoCliente() {
 		return TipoCliente.toEnum(tipoCliente);
 	}
 
-
 	public void setTipoCliente(TipoCliente tipoCliente) {
 		this.tipoCliente = tipoCliente.getCod();
 	}
-
 
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 
-
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
 	}
-
 
 	public Set<String> getTelefones() {
 		return telefones;
 	}
 
-
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
-	
+
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}
-	
+
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -146,7 +129,6 @@ public class Cliente implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
