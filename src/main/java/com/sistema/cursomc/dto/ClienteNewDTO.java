@@ -15,6 +15,7 @@ public class ClienteNewDTO implements Serializable {
 	private String logradouro;
 	private String numero;
 	private String complemento;
+	private String bairro;
 	private String cep;
 	
 	private String telefone1;
@@ -81,6 +82,14 @@ public class ClienteNewDTO implements Serializable {
 
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+	}
+	
+	public String getBairro() {
+		return bairro;
+	}
+	
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
 	}
 
 	public String getCep() {

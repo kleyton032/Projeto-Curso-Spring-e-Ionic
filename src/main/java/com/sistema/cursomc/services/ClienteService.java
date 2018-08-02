@@ -85,14 +85,14 @@ public class ClienteService {
 	public Cliente fromDto(ClienteNewDTO clienteNewDto) {
 		Cliente cliente = new Cliente(null, clienteNewDto.getNome(), clienteNewDto.getCpfOuCnpj(), clienteNewDto.getEmail(), TipoCliente.toEnum(clienteNewDto.getTipoCliente()));
 		Cidade cidade = new Cidade(clienteNewDto.getCidadeId(), null, null);
-		Endereco endereco = new Endereco(null, clienteNewDto.getLogradouro(), clienteNewDto.getNumero(), clienteNewDto.getComplemento(), clienteNewDto.getCep(), cliente, cidade);
+		Endereco endereco = new Endereco(null, clienteNewDto.getLogradouro(), clienteNewDto.getNumero(), clienteNewDto.getComplemento(), clienteNewDto.getBairro(), clienteNewDto.getCep(), cliente, cidade);
 		cliente.getEnderecos().add(endereco);
 		cliente.getTelefones().add(clienteNewDto.getTelefone1());
 		
-		if(clienteNewDto.getTelefone2() == null) {
+		if(clienteNewDto.getTelefone2() != null) {
 			cliente.getTelefones().add(clienteNewDto.getTelefone2());
 		}
-		if(clienteNewDto.getTelefone3() == null) {
+		if(clienteNewDto.getTelefone3() != null) {
 			cliente.getTelefones().add(clienteNewDto.getTelefone3());
 	}
 	
