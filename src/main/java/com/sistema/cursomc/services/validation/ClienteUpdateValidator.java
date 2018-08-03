@@ -9,16 +9,12 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.sistema.cursomc.dto.ClienteDTO;
-import com.sistema.cursomc.dto.ClienteNewDTO;
 import com.sistema.cursomc.model.Cliente;
-import com.sistema.cursomc.model.enums.TipoCliente;
 import com.sistema.cursomc.repositories.ClienteRepository;
 import com.sistema.cursomc.resources.exceptions.FieldMessage;
-import com.sistema.cursomc.services.validation.utils.CpfOuCnpj;
 
 //classe de validação customizada para inserção de um novo cliente para validar o cpf ou cnpj
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
