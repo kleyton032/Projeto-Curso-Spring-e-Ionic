@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sistema.cursomc.model.ItemPedido;
 import com.sistema.cursomc.model.PagamentoComBoleto;
@@ -33,6 +34,9 @@ public class PedidoService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
+	@Autowired
+	private ClienteService clienteService;
+	
 //	@Autowired
 //	private ProdutoService produtoService;
 
@@ -42,11 +46,14 @@ public class PedidoService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 	
+	@Transactional
 	public Pedido insert(Pedido pedido) {
 		//garantido que o pedido está nulo para inserção
 		pedido.setId(null);
 		//instanciando a data e hora do pedido
 		pedido.setInstante(new Date());
+		//setando cliente
+		pedido.setCliente(clienteService.find(pedido.getCliente().getId()));
 		//pegando o estado pagamento como pendente, pois se estou cadastrando um novo o status estará como pendente
 		pedido.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
 		//associação que o pagamento conheça o pedido dele
@@ -66,11 +73,14 @@ public class PedidoService {
 		
 		for(ItemPedido itemPedido : pedido.getItens()) {
 			itemPedido.setDesconto(0.0);
+			//setando produto
+			itemPedido.setProduto(produtoService.find(itemPedido.getProduto().getId()));
 			//instanciando o preço
-			itemPedido.setPreco(produtoService.find(itemPedido.getProduto().getId()).getPreco());
+			itemPedido.setPreco(itemPedido.getProduto().getPreco());
 			itemPedido.setPedido(pedido);
 		}
 		itemPedidoRepository.saveAll(pedido.getItens());
+		System.out.println(pedido);
 		return pedido;
 	}
 
