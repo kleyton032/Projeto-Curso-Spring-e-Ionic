@@ -29,7 +29,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	        this.jwtUtil = jwtUtil;
 	    }
 	
-	
 	//tentativa de login caso de certo sequencia do método abaixo
 	@Override
     public Authentication attemptAuthentication(HttpServletRequest req,
