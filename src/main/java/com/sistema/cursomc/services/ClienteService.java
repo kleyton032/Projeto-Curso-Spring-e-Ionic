@@ -1,5 +1,6 @@
 package com.sistema.cursomc.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sistema.cursomc.dto.ClienteDTO;
 import com.sistema.cursomc.dto.ClienteNewDTO;
@@ -37,6 +39,9 @@ public class ClienteService {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private S3Service s3Service;
 
 	public Cliente find(Integer id) {
 		
@@ -112,4 +117,11 @@ public class ClienteService {
 		return cliente;
 	
 	}
+	
+	
+	public URI uploadFileProfilePicture(MultipartFile file) {
+		
+		return s3Service.uploadFile(file);
+	}
+	
 }

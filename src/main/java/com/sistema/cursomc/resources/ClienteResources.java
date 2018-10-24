@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.cursomc.dto.ClienteDTO;
@@ -36,12 +37,13 @@ public class ClienteResources {
 		return ResponseEntity.ok().body(objeto);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDto){
-	Cliente cliente = clienteService.fromDto(clienteNewDto);
-	cliente = clienteService.insert(cliente);
-	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri();
-	return ResponseEntity.created(uri).build();
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDto) {
+		Cliente cliente = clienteService.fromDto(clienteNewDto);
+		cliente = clienteService.insert(cliente);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId())
+				.toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value= "/{id}", method=RequestMethod.PUT)
@@ -80,6 +82,11 @@ public class ClienteResources {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
+	@RequestMapping(value = "/picture", method = RequestMethod.POST)
+	public ResponseEntity<Void> profilePicture(@RequestParam(name="file") MultipartFile file) {
+		URI uri = clienteService.uploadFileProfilePicture(file);
+		return ResponseEntity.created(uri).build();
+	}
 	
 	
 }
