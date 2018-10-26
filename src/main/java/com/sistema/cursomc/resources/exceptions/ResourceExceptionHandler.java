@@ -9,8 +9,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.sistema.cursomc.services.exceptions.AuthorizationException;
 import com.sistema.cursomc.services.exceptions.DataIntegrityException;
+import com.sistema.cursomc.services.exceptions.FileException;
 import com.sistema.cursomc.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
@@ -56,5 +60,41 @@ public class ResourceExceptionHandler {
 		 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
 		 
 	 }
+	
+	@ExceptionHandler(FileException.class)
+	 public ResponseEntity<StandarError> file(FileException e, HttpServletRequest request){
+		 
+		 StandarError error = new StandarError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		 
+	 }
+	
+	@ExceptionHandler(AmazonServiceException.class)
+	 public ResponseEntity<StandarError> amazonService(AmazonServiceException e, HttpServletRequest request){
+		 
+		HttpStatus status = HttpStatus.valueOf(e.getErrorCode());
+		 StandarError error = new StandarError(status.value(), e.getMessage(), System.currentTimeMillis());
+		 return ResponseEntity.status(status).body(error);
+		 
+	 }
+	
+	@ExceptionHandler(AmazonClientException.class)
+	 public ResponseEntity<StandarError> amazonClient(AmazonClientException e, HttpServletRequest request){
+		 
+		 StandarError error = new StandarError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		 
+	 }
+	
+
+	@ExceptionHandler(AmazonS3Exception.class)
+	 public ResponseEntity<StandarError> amazonS3(AmazonS3Exception e, HttpServletRequest request){
+		 
+		 StandarError error = new StandarError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		 
+	 }
+	
+	
 	
 }
