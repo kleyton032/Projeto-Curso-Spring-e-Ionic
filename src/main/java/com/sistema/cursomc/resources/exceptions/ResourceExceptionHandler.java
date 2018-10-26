@@ -61,6 +61,7 @@ public class ResourceExceptionHandler {
 		 
 	 }
 	
+	//exceção personalizada da FileException, exceção criada adequadamente para retorno do httpstatus
 	@ExceptionHandler(FileException.class)
 	 public ResponseEntity<StandarError> file(FileException e, HttpServletRequest request){
 		 
@@ -69,6 +70,7 @@ public class ResourceExceptionHandler {
 		 
 	 }
 	
+	//exceção personalizada da amazonService
 	@ExceptionHandler(AmazonServiceException.class)
 	 public ResponseEntity<StandarError> amazonService(AmazonServiceException e, HttpServletRequest request){
 		 
@@ -78,6 +80,7 @@ public class ResourceExceptionHandler {
 		 
 	 }
 	
+	//exceção personalizada da amazonClient
 	@ExceptionHandler(AmazonClientException.class)
 	 public ResponseEntity<StandarError> amazonClient(AmazonClientException e, HttpServletRequest request){
 		 

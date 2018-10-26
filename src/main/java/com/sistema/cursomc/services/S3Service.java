@@ -46,7 +46,7 @@ public class S3Service {
 			
 	}
 
-	
+	//sobre carga do método
 	public URI uploadFile(InputStream inputStream, String fileName, String contentType) {
 	
 		try {
