@@ -105,6 +105,24 @@ public class ClienteService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPages, Direction.valueOf(direction), ordeBy);
 		return clienteRepository.findAll(pageRequest);
 	}
+	
+	//método para retornar um cliente por e-mail
+	public Cliente findByEmail(String email) {
+		UserSpringSecurity user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+	
+		Cliente obj = clienteRepository.findByEmail(email);
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		return obj;
+	}
+	
+	
+	
 	//método transformar um cliente DTO em objeto
 	public Cliente fromDto(ClienteDTO clienteDto) {
 		return new Cliente(clienteDto.getId(), clienteDto.getNome(), null, clienteDto.getEmail(), null, null);
